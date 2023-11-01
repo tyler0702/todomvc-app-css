@@ -1,3 +1,58 @@
+graph TB
+  subgraph Client ["クライアント"]
+    UI["ユーザーインターフェース"]
+    ClientLogic["クライアントサイドロジック"]
+  end
+
+  subgraph Server ["サーバ"]
+    APIServer["APIサーバ"]
+    MessageService["メッセージ処理サービス"]
+    NotificationService["通知サービス"]
+  end
+  
+  subgraph Database ["データベース"]
+    MessageDB["メッセージDB"]
+    UserDB["ユーザーDB"]
+  end
+  
+  subgraph Infrastructure ["インフラストラクチャ"]
+    LoadBalancer["ロードバランサー"]
+    Cache["キャッシュ"]
+  end
+  
+  subgraph Security ["セキュリティと認証"]
+    AuthServer["認証サーバ"]
+    Encryption["エンドツーエンド暗号化"]
+  end
+  
+  subgraph Monitoring ["監視とロギング"]
+    LogServer["ログサーバ"]
+    MonitoringTools["監視ツール"]
+  end
+  
+  subgraph ThirdParty ["サードパーティサービス"]
+    PushNotification["プッシュ通知サービス"]
+    EmailService["メールサービス"]
+  end
+
+  UI -->|リクエスト送信| ClientLogic
+  ClientLogic -->|APIリクエスト| APIServer
+  APIServer -->|メッセージ配信| MessageService
+  APIServer -->|通知送信| NotificationService
+  MessageService -->|メッセージ保存| MessageDB
+  MessageService -->|ユーザー情報取得| UserDB
+  NotificationService -->|プッシュ通知| PushNotification
+  NotificationService -->|メール通知| EmailService
+  LoadBalancer -->|トラフィック分散| APIServer
+  APIServer -->|データキャッシュ| Cache
+  APIServer -->|ユーザー認証| AuthServer
+  ClientLogic -->|メッセージ暗号化| Encryption
+  APIServer -->|ログ記録| LogServer
+  APIServer -->|システム監視| MonitoringTools
+
+
+
+
 # todomvc-app-css
 
 > CSS for TodoMVC apps
